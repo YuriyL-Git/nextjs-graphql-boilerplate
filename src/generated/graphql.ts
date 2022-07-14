@@ -27,7 +27,6 @@ export type Dog = {
   image: Scalars['String'];
   name: Scalars['ID'];
   sex: Scalars['String'];
-  stateColors: Scalars['String'];
   weight: Scalars['Float'];
 };
 

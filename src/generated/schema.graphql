@@ -17,7 +17,6 @@ type Dog {
   sex: String!
   breed: String!
   color: String!
-  stateColors: String!
   fee: Float!
   weight: Float!
   availableDate: String!

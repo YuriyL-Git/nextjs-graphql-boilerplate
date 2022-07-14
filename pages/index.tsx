@@ -16,7 +16,7 @@ export async function getServerSideProps() {
 const Home: NextPage = () => {
   const { data } = useQuery(["dogs"], () => getDogs());
 
-  return <div>{JSON.stringify(data?.dogs[0].name)}</div>;
+  return <div>{JSON.stringify(data?.dogs)}</div>;
 };
 
 export default Home;
