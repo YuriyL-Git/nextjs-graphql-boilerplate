@@ -27,6 +27,7 @@ export type Dog = {
   image: Scalars['String'];
   name: Scalars['ID'];
   sex: Scalars['String'];
+  stateColors: Scalars['String'];
   weight: Scalars['Float'];
 };
 
@@ -50,13 +51,40 @@ export type QueryDogArgs = {
 export type GetDogsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDogsQuery = { __typename?: 'Query', dogs: Array<{ __typename?: 'Dog', name: string }> };
+export type GetDogsQuery = { __typename?: 'Query', dogs: Array<{ __typename?: 'Dog', name: string, breed: string, ageInWeeks: number, image: string, sex: string, weight: number, fee: number }> };
+
+export type GetDogByNameQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type GetDogByNameQuery = { __typename?: 'Query', dog?: { __typename?: 'Dog', name: string, breed: string, ageInWeeks: number, attributes: Array<{ __typename?: 'DogAttribute', key: string, value: string }> } | null };
 
 
 export const GetDogsDocument = gql`
     query getDogs {
   dogs {
     name
+    breed
+    ageInWeeks
+    image
+    sex
+    weight
+    fee
+  }
+}
+    `;
+export const GetDogByNameDocument = gql`
+    query getDogByName($name: String!) {
+  dog(name: $name) {
+    name
+    breed
+    ageInWeeks
+    breed
+    attributes {
+      key
+      value
+    }
   }
 }
     `;
@@ -70,6 +98,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     getDogs(variables?: GetDogsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetDogsQuery>(GetDogsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogs', 'query');
+    },
+    getDogByName(variables: GetDogByNameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogByNameQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetDogByNameQuery>(GetDogByNameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogByName', 'query');
     }
   };
 }

@@ -3,22 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently 'yarn next dev' 'yarn codegen'",
     "build": "next build",
-    "generate": "graphql-codegen",
+    "codegen": "graphql-codegen --watch",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "apollo-server-micro": "^3.10.0",
     "class-validator": "^0.13.2",
+    "concurrently": "^7.2.2",
     "graphql": "^15.3.0",
+    "graphql-request": "^4.3.0",
     "micro": "^9.3.4",
     "next": "12.2.2",
     "praphql": "^0.1.1",
     "prettier": "^2.7.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-query": "^3.39.1",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1"
   },

@@ -1,0 +1,12 @@
+query getDogByName($name: String!) {
+    dog(name: $name) {
+        name
+        breed
+        ageInWeeks
+        breed
+        attributes {
+            key
+            value
+        }
+    }
+}

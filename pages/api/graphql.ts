@@ -14,8 +14,6 @@ const schema = await buildSchema({
   },
 });
 
-console.log("DIRNAME= ", __dirname);
-
 const server = new ApolloServer({
   schema,
 });
@@ -43,7 +41,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   setHeaders(res);
-  console.log("RESS");
   if (req.method === "OPTIONS") {
     res.end();
     return false;
