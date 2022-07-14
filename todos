@@ -2,3 +2,5 @@
 2. setup database with prisma
 3. setup chakra ui
 4. create test project
+5. install redis with refresh token
+6. install docker

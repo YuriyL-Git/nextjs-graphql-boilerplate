@@ -2,10 +2,19 @@ import { ApolloServer } from "apollo-server-micro";
 import { NextApiRequest, NextApiResponse } from "next";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import { DogsResolver } from "../../src/graphql/schema/dogs.resolver";
+import { DogsResolver } from "@/src/graphql/schema/dogs.resolver";
 import path from "path";
+import Cors from "cors";
+import { HOST_NAME } from "@/src/config/config";
+import { runMiddleware } from "@/src/utils/run-middleware";
 
-const SCHEMA_PATH = "./../../../../src/graphql/generated/schema.graphql";
+const SCHEMA_PATH = "@/src/graphql/generated/schema.graphql";
+
+const cors = Cors({
+  methods: ["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  credentials: true,
+  origin: ["https://studio.apollographql.com", HOST_NAME as string],
+});
 
 const schema = await buildSchema({
   resolvers: [DogsResolver],
@@ -19,30 +28,13 @@ const schema = await buildSchema({
 const server = new ApolloServer({
   schema,
 });
-
 const startServer = server.start();
-
-function setHeaders(res: NextApiResponse): void {
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://studio.apollographql.com"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Access-Control-Allow-Headers"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "POST, GET, PUT, PATCH, DELETE, OPTIONS, HEAD"
-  );
-}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  setHeaders(res);
+  await runMiddleware(req, res, cors);
   if (req.method === "OPTIONS") {
     res.end();
     return false;

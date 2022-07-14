@@ -1,5 +1,5 @@
 import type { AppProps } from "next/app";
-import { queryClient } from "../src/graphql/api";
+import { queryClient } from "@/src/graphql/api";
 import { Hydrate, QueryClientProvider } from "react-query";
 
 function MyApp({ Component, pageProps }: AppProps) {

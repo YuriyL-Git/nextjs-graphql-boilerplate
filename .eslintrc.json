@@ -1,3 +1,19 @@
 {
-  "extends": "next/core-web-vitals"
+  "plugins": ["type-graphql"],
+  "extends": ["next/core-web-vitals", "plugin:type-graphql/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"], // Your TypeScript files extension
+
+      // As mentioned in the comments, you should extend TypeScript plugins here,
+      // instead of extending them outside the `overrides`.
+      // If you don't want to extend any rules, you don't need an `extends` attribute.
+
+
+      "parserOptions": {
+        "project": ["./tsconfig.json"] // Specify it only for TypeScript files
+      }
+    }
+  ]
 }

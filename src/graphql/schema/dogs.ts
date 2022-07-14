@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from "type-graphql";
+import { ObjectType, Field, ID, Int, Float } from "type-graphql";
 
 @ObjectType()
 export class DogAttribute {
@@ -23,7 +23,7 @@ export class Dog {
   @Field(() => String)
   image: string;
 
-  @Field(() => Number)
+  @Field(() => Int)
   ageInWeeks: number;
 
   @Field(() => String)
@@ -35,10 +35,10 @@ export class Dog {
   @Field(() => String)
   color: string;
 
-  @Field(() => Number)
+  @Field(() => Float)
   fee: number;
 
-  @Field(() => Number)
+  @Field(() => Float)
   weight: number;
 
   @Field(() => String)
