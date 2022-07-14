@@ -5,15 +5,29 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "generate": "graphql-codegen",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "apollo-server-micro": "^3.10.0",
+    "class-validator": "^0.13.2",
+    "graphql": "^15.3.0",
+    "micro": "^9.3.4",
     "next": "12.2.2",
+    "praphql": "^0.1.1",
+    "prettier": "^2.7.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.8.1",
+    "@graphql-codegen/typescript": "^2.7.1",
+    "@graphql-codegen/typescript-graphql-request": "^4.5.1",
+    "@graphql-codegen/typescript-operations": "^2.5.1",
+    "@graphql-codegen/typescript-react-query": "^3.6.1",
     "@types/node": "18.0.3",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
