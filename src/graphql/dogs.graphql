@@ -7,5 +7,6 @@ query getDogs {
         sex
         weight
         fee
+
     }
 }

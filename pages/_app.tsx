@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { queryClient } from "../src/api";
 import { Hydrate, QueryClientProvider } from "react-query";

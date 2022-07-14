@@ -5,10 +5,12 @@ import { buildSchema } from "type-graphql";
 import { DogsResolver } from "../../src/schema/dogs.resolver";
 import path from "path";
 
+const SCHEMA_PATH = "./../../../../src/generated/schema.graphql";
+
 const schema = await buildSchema({
   resolvers: [DogsResolver],
   emitSchemaFile: {
-    path: path.join(__dirname, "./../../../../src/generated/schema.graphql"),
+    path: path.join(__dirname, SCHEMA_PATH),
     commentDescriptions: false,
     sortedSchema: false,
   },
