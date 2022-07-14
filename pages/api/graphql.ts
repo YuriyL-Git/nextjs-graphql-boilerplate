@@ -2,10 +2,10 @@ import { ApolloServer } from "apollo-server-micro";
 import { NextApiRequest, NextApiResponse } from "next";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import { DogsResolver } from "../../src/schema/dogs.resolver";
+import { DogsResolver } from "../../src/graphql/schema/dogs.resolver";
 import path from "path";
 
-const SCHEMA_PATH = "./../../../../src/generated/schema.graphql";
+const SCHEMA_PATH = "./../../../../src/graphql/generated/schema.graphql";
 
 const schema = await buildSchema({
   resolvers: [DogsResolver],

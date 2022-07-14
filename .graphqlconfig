@@ -1,6 +1,6 @@
 {
   "name": "Remote Schema",
-  "schemaPath": "./src/generated/schema.graphql",
+  "schemaPath": "./src/graphql/generated/schema.graphql",
   "dotEnvPath": ".env",
   "extensions": {
     "endpoints": {

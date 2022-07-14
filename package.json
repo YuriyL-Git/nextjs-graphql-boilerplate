@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently 'yarn next dev' 'yarn codegen'",
     "build": "next build",
-    "codegen": "graphql-codegen --watch",
+    "codegen": "graphql-codegen -r dotenv/config --watch",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,6 +19,7 @@
     "graphql-request": "^4.3.0",
     "micro": "^9.3.4",
     "next": "12.2.2",
+    "node-watch": "^0.7.3",
     "praphql": "^0.1.1",
     "prettier": "^2.7.1",
     "react": "18.2.0",

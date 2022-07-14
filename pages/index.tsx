@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { dehydrate, useQuery } from "react-query";
-import { queryClient, getDogs } from "../src/api";
+import { queryClient, getDogs } from "../src/graphql/api";
 import Head from "next/head";
 
 export async function getServerSideProps() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { dehydrate, useQuery } from "react-query";
 
-import { queryClient, getDogByName } from "../../src/api";
+import { queryClient, getDogByName } from "../../src/graphql/api";
 
 interface IProps {
   params: {
