@@ -10,7 +10,6 @@ interface IProps {
 }
 
 export async function getServerSideProps({ params }: IProps) {
-  console.log(params.name);
   await queryClient.prefetchQuery(["dog"], () =>
     getDogByName({ name: params.name })
   );

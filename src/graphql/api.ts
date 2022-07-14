@@ -4,7 +4,6 @@ import { getSdk } from "./generated/query-types";
 import { HOST_NAME } from "../config/config";
 
 const gglClient = new GraphQLClient(`${HOST_NAME}/api/graphql`);
-export const { getDogs, getDogByName } = getSdk(gglClient);
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,3 +14,8 @@ export const queryClient = new QueryClient({
     },
   },
 });
+
+//generated exports!
+const { getDogs, getDogByName } = getSdk(gglClient);
+
+export { getDogs, getDogByName };
