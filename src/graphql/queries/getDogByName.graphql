@@ -10,3 +10,4 @@ query getDogByName($name: String!) {
         }
     }
 }
+

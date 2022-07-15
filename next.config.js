@@ -73,12 +73,9 @@ function updateQueryNamesExport(queryTypesPath) {
 function updateConfig() {
   const project = new Project();
   const sourceFile = project.addSourceFileAtPath("src/config/config.ts");
-  console.log(
-    "DECLARATIONS=",
-    sourceFile
-      .getVariableDeclaration("HOST_NAME")
-      .setInitializer(`"${HOST_NAME}"`)
-  );
+  sourceFile
+    .getVariableDeclaration("HOST_NAME")
+    .setInitializer(`"${HOST_NAME}"`);
   sourceFile.save();
 }
 
@@ -87,6 +84,7 @@ function runAfterStart() {
 
   watch(SCHEMAS_PATH, { recursive: true }, function (evt, name) {
     //will trigger schema update
+    console.log("UPDATE GRAPHQL");
     http.get(`${HOST_NAME}api/graphql`);
   });
 

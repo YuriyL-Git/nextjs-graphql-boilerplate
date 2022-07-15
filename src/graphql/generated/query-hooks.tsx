@@ -17,7 +17,7 @@ export type Scalars = {
 
 export type Dog = {
   __typename?: 'Dog';
-  ageInWeeks: Scalars['Float'];
+  ageInWeeks: Scalars['Int'];
   attributes: Array<DogAttribute>;
   availableDate: Scalars['String'];
   breed: Scalars['String'];
@@ -38,8 +38,14 @@ export type DogAttribute = {
 
 export type Query = {
   __typename?: 'Query';
+  breedDogs: Array<Dog>;
   dog?: Maybe<Dog>;
   dogs: Array<Dog>;
+};
+
+
+export type QueryBreedDogsArgs = {
+  breed: Scalars['String'];
 };
 
 

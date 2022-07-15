@@ -1,4 +1,4 @@
-schema: 'src/graphql/generated/schema.graphql'
+schema: '${HOST_NAME}/api/graphql'
 documents: 'src/**/*.graphql'
 generates:
   src/graphql/generated/query-hooks.tsx:
@@ -6,3 +6,14 @@ generates:
       - typescript
       - typescript-operations
       - typescript-react-apollo
+  src/graphql/generated/query-types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request
+
+
+
+
+
+

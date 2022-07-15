@@ -38,8 +38,14 @@ export type DogAttribute = {
 
 export type Query = {
   __typename?: 'Query';
+  breedDogs: Array<Dog>;
   dog?: Maybe<Dog>;
   dogs: Array<Dog>;
+};
+
+
+export type QueryBreedDogsArgs = {
+  breed: Scalars['String'];
 };
 
 
