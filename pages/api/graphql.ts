@@ -3,13 +3,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { DogsResolver } from "@/src/graphql/schema/dogs.resolver";
+import { UserResolver } from "@/src/graphql/schema/user.resolver";
+
 import path from "path";
 import Cors from "cors";
 import { HOST_NAME } from "@/src/config/config";
 import { runMiddleware } from "@/src/utils/run-middleware";
 import { prisma } from "@/src/prisma/prisma";
-import { PrismaClient } from "@prisma/client";
-import { resolvers } from "./../../src/prisma/node_modules/@generated/type-graphql/index";
+import { resolvers } from "./../../src/prisma/node_modules/@generated/type-graphql/";
 
 const SCHEMA_PATH = "./../../../../src/graphql/generated/schema.graphql";
 
@@ -20,7 +21,7 @@ const cors = Cors({
 });
 
 const schema = await buildSchema({
-  resolvers: [DogsResolver, ...resolvers],
+  resolvers: [DogsResolver, UserResolver, ...resolvers],
   emitSchemaFile: {
     path: path.join(__dirname, SCHEMA_PATH),
     commentDescriptions: false,
@@ -28,17 +29,11 @@ const schema = await buildSchema({
   },
 });
 
-export type Context = {
-  prisma: PrismaClient;
-};
-export async function createContext(): Promise<Context> {
-  return {
-    prisma,
-  };
-}
 const server = new ApolloServer({
   schema,
-  context: createContext,
+  context: () => {
+    return { prisma };
+  },
 });
 const startServer = server.start();
 

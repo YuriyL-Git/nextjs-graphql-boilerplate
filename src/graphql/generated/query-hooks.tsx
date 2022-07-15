@@ -968,6 +968,7 @@ export type Query = {
   session?: Maybe<Session>;
   sessions: Array<Session>;
   user?: Maybe<User>;
+  userByEmail?: Maybe<User>;
   users: Array<User>;
   verificationToken?: Maybe<VerificationToken>;
   verificationTokens: Array<VerificationToken>;
@@ -1888,11 +1889,6 @@ export type GetDogsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetDogsQuery = { __typename?: 'Query', dogs: Array<{ __typename?: 'Dog', name: string, breed: string, ageInWeeks: number, image: string, sex: string }> };
 
-export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', name?: string | null, id: string } | null };
-
 export type GetDogByNameQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -1906,6 +1902,11 @@ export type GetDogByBreedQueryVariables = Exact<{
 
 
 export type GetDogByBreedQuery = { __typename?: 'Query', dogsByBreed: Array<{ __typename?: 'Dog', name: string, sex: string, breed: string, weight: number }> };
+
+export type GetUserByEmailQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail?: { __typename?: 'User', name?: string | null } | null };
 
 
 export const GetDogsDocument = gql`
@@ -1946,41 +1947,6 @@ export function useGetDogsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetDogsQueryHookResult = ReturnType<typeof useGetDogsQuery>;
 export type GetDogsLazyQueryHookResult = ReturnType<typeof useGetDogsLazyQuery>;
 export type GetDogsQueryResult = Apollo.QueryResult<GetDogsQuery, GetDogsQueryVariables>;
-export const GetUserDocument = gql`
-    query getUser {
-  user(where: {id: "test"}) {
-    name
-    id
-  }
-}
-    `;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetDogByNameDocument = gql`
     query getDogByName($name: String!) {
   dog(name: $name) {
@@ -2061,3 +2027,37 @@ export function useGetDogByBreedLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type GetDogByBreedQueryHookResult = ReturnType<typeof useGetDogByBreedQuery>;
 export type GetDogByBreedLazyQueryHookResult = ReturnType<typeof useGetDogByBreedLazyQuery>;
 export type GetDogByBreedQueryResult = Apollo.QueryResult<GetDogByBreedQuery, GetDogByBreedQueryVariables>;
+export const GetUserByEmailDocument = gql`
+    query getUserByEmail {
+  userByEmail {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetUserByEmailQuery__
+ *
+ * To run a query within a React component, call `useGetUserByEmailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserByEmailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserByEmailQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserByEmailQuery(baseOptions?: Apollo.QueryHookOptions<GetUserByEmailQuery, GetUserByEmailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserByEmailQuery, GetUserByEmailQueryVariables>(GetUserByEmailDocument, options);
+      }
+export function useGetUserByEmailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByEmailQuery, GetUserByEmailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserByEmailQuery, GetUserByEmailQueryVariables>(GetUserByEmailDocument, options);
+        }
+export type GetUserByEmailQueryHookResult = ReturnType<typeof useGetUserByEmailQuery>;
+export type GetUserByEmailLazyQueryHookResult = ReturnType<typeof useGetUserByEmailLazyQuery>;
+export type GetUserByEmailQueryResult = Apollo.QueryResult<GetUserByEmailQuery, GetUserByEmailQueryVariables>;

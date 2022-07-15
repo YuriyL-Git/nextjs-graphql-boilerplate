@@ -24,6 +24,7 @@ type Query {
   verificationTokens(where: VerificationTokenWhereInput, orderBy: [VerificationTokenOrderByWithRelationInput!], cursor: VerificationTokenWhereUniqueInput, take: Int, skip: Int, distinct: [VerificationTokenScalarFieldEnum!]): [VerificationToken!]!
   verificationToken(where: VerificationTokenWhereUniqueInput!): VerificationToken
   groupByVerificationToken(where: VerificationTokenWhereInput, orderBy: [VerificationTokenOrderByWithAggregationInput!], by: [VerificationTokenScalarFieldEnum!]!, having: VerificationTokenScalarWhereWithAggregatesInput, take: Int, skip: Int): [VerificationTokenGroupBy!]!
+  userByEmail: User
   dog(name: String!): Dog
   dogsByBreed(breed: String!): [Dog!]!
   dogs: [Dog!]!

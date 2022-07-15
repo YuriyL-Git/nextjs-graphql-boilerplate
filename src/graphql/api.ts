@@ -16,6 +16,6 @@ export const queryClient = new QueryClient({
 });
 
 //generated exports!
-const { getDogs, getUser, getDogByName, getDogByBreed } = getSdk(gglClient);
+const { getDogs, getDogByName, getDogByBreed, getUserByEmail } = getSdk(gglClient);
 
-export { getDogs, getUser, getDogByName, getDogByBreed };
+export { getDogs, getDogByName, getDogByBreed, getUserByEmail };

@@ -968,6 +968,7 @@ export type Query = {
   session?: Maybe<Session>;
   sessions: Array<Session>;
   user?: Maybe<User>;
+  userByEmail?: Maybe<User>;
   users: Array<User>;
   verificationToken?: Maybe<VerificationToken>;
   verificationTokens: Array<VerificationToken>;
@@ -1888,11 +1889,6 @@ export type GetDogsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetDogsQuery = { __typename?: 'Query', dogs: Array<{ __typename?: 'Dog', name: string, breed: string, ageInWeeks: number, image: string, sex: string }> };
 
-export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetUserQuery = { __typename?: 'Query', user?: { __typename?: 'User', name?: string | null, id: string } | null };
-
 export type GetDogByNameQueryVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -1907,6 +1903,11 @@ export type GetDogByBreedQueryVariables = Exact<{
 
 export type GetDogByBreedQuery = { __typename?: 'Query', dogsByBreed: Array<{ __typename?: 'Dog', name: string, sex: string, breed: string, weight: number }> };
 
+export type GetUserByEmailQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail?: { __typename?: 'User', name?: string | null } | null };
+
 
 export const GetDogsDocument = gql`
     query getDogs {
@@ -1916,14 +1917,6 @@ export const GetDogsDocument = gql`
     ageInWeeks
     image
     sex
-  }
-}
-    `;
-export const GetUserDocument = gql`
-    query getUser {
-  user(where: {id: "test"}) {
-    name
-    id
   }
 }
     `;
@@ -1951,6 +1944,13 @@ export const GetDogByBreedDocument = gql`
   }
 }
     `;
+export const GetUserByEmailDocument = gql`
+    query getUserByEmail {
+  userByEmail {
+    name
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -1962,14 +1962,14 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getDogs(variables?: GetDogsQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetDogsQuery>(GetDogsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogs', 'query');
     },
-    getUser(variables?: GetUserQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetUserQuery>(GetUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUser', 'query');
-    },
     getDogByName(variables: GetDogByNameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogByNameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetDogByNameQuery>(GetDogByNameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogByName', 'query');
     },
     getDogByBreed(variables: GetDogByBreedQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogByBreedQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetDogByBreedQuery>(GetDogByBreedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogByBreed', 'query');
+    },
+    getUserByEmail(variables?: GetUserByEmailQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetUserByEmailQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByEmailQuery>(GetUserByEmailDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUserByEmail', 'query');
     }
   };
 }

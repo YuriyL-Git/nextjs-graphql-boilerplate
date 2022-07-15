@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently 'yarn next dev' 'yarn codegen'",
+    "dev": "concurrently 'yarn migrate' 'yarn next dev' 'yarn codegen'",
     "build": "next build",
     "codegen": "graphql-codegen -r dotenv/config --watch",
     "start": "next start",

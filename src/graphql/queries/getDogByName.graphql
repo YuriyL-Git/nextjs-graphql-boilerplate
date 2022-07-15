@@ -20,3 +20,11 @@ query getDogByBreed($breed: String!) {
     }
 }
 
+
+query getUserByEmail {
+ userByEmail {
+     name
+ }
+}
+
+
