@@ -4,3 +4,7 @@
 4. create test project
 5. install redis with refresh token
 6. install docker
+
+
+//create google auth
+//https://console.cloud.google.com/apis/dashboard?project=vivid-anthem-346718

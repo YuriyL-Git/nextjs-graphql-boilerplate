@@ -7,3 +7,10 @@ query getDogs {
         sex
     }
 }
+
+query getUser {
+    user(where: {id: "test"}) {
+        name
+        id
+    }
+}
