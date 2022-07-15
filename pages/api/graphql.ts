@@ -8,7 +8,7 @@ import Cors from "cors";
 import { HOST_NAME } from "@/src/config/config";
 import { runMiddleware } from "@/src/utils/run-middleware";
 
-const SCHEMA_PATH = "@/src/graphql/generated/schema.graphql";
+const SCHEMA_PATH = "./../../../../src/graphql/generated/schema.graphql";
 
 const cors = Cors({
   methods: ["GET", "HEAD", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
