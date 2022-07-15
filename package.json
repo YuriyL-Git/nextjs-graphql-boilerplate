@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "apollo-server-micro": "^3.10.0",
     "class-validator": "^0.13.2",
     "concurrently": "^7.2.2",
@@ -25,6 +26,7 @@
     "praphql": "^0.1.1",
     "prettier": "^2.7.1",
     "react": "18.2.0",
+    "react-apollo": "^3.1.5",
     "react-dom": "18.2.0",
     "react-query": "^3.39.1",
     "reflect-metadata": "^0.1.13",
@@ -36,6 +38,7 @@
     "@graphql-codegen/typescript": "^2.7.1",
     "@graphql-codegen/typescript-graphql-request": "^4.5.1",
     "@graphql-codegen/typescript-operations": "^2.5.1",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.1",
     "@graphql-codegen/typescript-react-query": "^3.6.1",
     "@types/cors": "^2.8.12",
     "@types/node": "18.0.3",

@@ -2,6 +2,7 @@
   "plugins": ["type-graphql"],
   "extends": ["next/core-web-vitals", "plugin:type-graphql/recommended"],
   "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["*.js"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"], // Your TypeScript files extension

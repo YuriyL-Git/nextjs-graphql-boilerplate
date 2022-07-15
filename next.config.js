@@ -70,6 +70,18 @@ function updateQueryNamesExport(queryTypesPath) {
   sourceFile.save();
 }
 
+function updateConfig() {
+  const project = new Project();
+  const sourceFile = project.addSourceFileAtPath("src/config/config.ts");
+  console.log(
+    "DECLARATIONS=",
+    sourceFile
+      .getVariableDeclaration("HOST_NAME")
+      .setInitializer(`"${HOST_NAME}"`)
+  );
+  sourceFile.save();
+}
+
 function runAfterStart() {
   openApps();
 
@@ -81,6 +93,8 @@ function runAfterStart() {
   watch(QUERY_TYPES_PATH, { recursive: true }, function (evt, name) {
     updateQueryNamesExport(QUERY_TYPES_PATH);
   });
+
+  updateConfig();
 }
 
 module.exports = () => {

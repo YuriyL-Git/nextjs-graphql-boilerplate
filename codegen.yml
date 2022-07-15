@@ -1,8 +1,8 @@
-schema: '${HOST_NAME}/api/graphql'
-documents: './src/**/*.graphql'
+schema: 'src/graphql/generated/schema.graphql'
+documents: 'src/**/*.graphql'
 generates:
-  ./src/graphql/generated/query-types.ts:
+  src/graphql/generated/query-hooks.tsx:
     plugins:
       - typescript
       - typescript-operations
-      - typescript-graphql-request
+      - typescript-react-apollo
