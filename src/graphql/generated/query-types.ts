@@ -38,19 +38,19 @@ export type DogAttribute = {
 
 export type Query = {
   __typename?: 'Query';
-  breedDogs: Array<Dog>;
   dog?: Maybe<Dog>;
   dogs: Array<Dog>;
-};
-
-
-export type QueryBreedDogsArgs = {
-  breed: Scalars['String'];
+  dogsByBreed: Array<Dog>;
 };
 
 
 export type QueryDogArgs = {
   name: Scalars['String'];
+};
+
+
+export type QueryDogsByBreedArgs = {
+  breed: Scalars['String'];
 };
 
 export type GetDogsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -64,6 +64,13 @@ export type GetDogByNameQueryVariables = Exact<{
 
 
 export type GetDogByNameQuery = { __typename?: 'Query', dog?: { __typename?: 'Dog', name: string, breed: string, ageInWeeks: number, attributes: Array<{ __typename?: 'DogAttribute', key: string, value: string }> } | null };
+
+export type GetDogByBreedQueryVariables = Exact<{
+  breed: Scalars['String'];
+}>;
+
+
+export type GetDogByBreedQuery = { __typename?: 'Query', dogsByBreed: Array<{ __typename?: 'Dog', name: string, sex: string, breed: string, weight: number }> };
 
 
 export const GetDogsDocument = gql`
@@ -91,6 +98,16 @@ export const GetDogByNameDocument = gql`
   }
 }
     `;
+export const GetDogByBreedDocument = gql`
+    query getDogByBreed($breed: String!) {
+  dogsByBreed(breed: $breed) {
+    name
+    sex
+    breed
+    weight
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -104,6 +121,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getDogByName(variables: GetDogByNameQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogByNameQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetDogByNameQuery>(GetDogByNameDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogByName', 'query');
+    },
+    getDogByBreed(variables: GetDogByBreedQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetDogByBreedQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetDogByBreedQuery>(GetDogByBreedDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDogByBreed', 'query');
     }
   };
 }

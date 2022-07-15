@@ -14,7 +14,7 @@ export class DogsResolver {
   }
 
   @Query(() => [Dog])
-  breedDogs(@Arg("breed", () => String) breed: string): Dog[] {
+  dogsByBreed(@Arg("breed", () => String) breed: string): Dog[] {
     return dogs.filter((dog) => dog.breed === breed);
   }
 

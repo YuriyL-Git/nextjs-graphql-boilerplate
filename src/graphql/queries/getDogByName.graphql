@@ -11,3 +11,12 @@ query getDogByName($name: String!) {
     }
 }
 
+query getDogByBreed($breed: String!) {
+    dogsByBreed(breed: $breed) {
+        name
+        sex
+        breed
+        weight
+    }
+}
+

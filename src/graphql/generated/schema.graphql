@@ -5,6 +5,7 @@
 
 type Query {
   dog(name: String!): Dog
+  dogsByBreed(breed: String!): [Dog!]!
   dogs: [Dog!]!
 }
 
@@ -13,7 +14,7 @@ type Dog {
   attributes: [DogAttribute!]!
   description: [String!]!
   image: String!
-  ageInWeeks: Float!
+  ageInWeeks: Int!
   sex: String!
   breed: String!
   color: String!

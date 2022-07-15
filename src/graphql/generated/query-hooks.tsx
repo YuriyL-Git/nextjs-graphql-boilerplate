@@ -38,19 +38,19 @@ export type DogAttribute = {
 
 export type Query = {
   __typename?: 'Query';
-  breedDogs: Array<Dog>;
   dog?: Maybe<Dog>;
   dogs: Array<Dog>;
-};
-
-
-export type QueryBreedDogsArgs = {
-  breed: Scalars['String'];
+  dogsByBreed: Array<Dog>;
 };
 
 
 export type QueryDogArgs = {
   name: Scalars['String'];
+};
+
+
+export type QueryDogsByBreedArgs = {
+  breed: Scalars['String'];
 };
 
 export type GetDogsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -64,6 +64,13 @@ export type GetDogByNameQueryVariables = Exact<{
 
 
 export type GetDogByNameQuery = { __typename?: 'Query', dog?: { __typename?: 'Dog', name: string, breed: string, ageInWeeks: number, attributes: Array<{ __typename?: 'DogAttribute', key: string, value: string }> } | null };
+
+export type GetDogByBreedQueryVariables = Exact<{
+  breed: Scalars['String'];
+}>;
+
+
+export type GetDogByBreedQuery = { __typename?: 'Query', dogsByBreed: Array<{ __typename?: 'Dog', name: string, sex: string, breed: string, weight: number }> };
 
 
 export const GetDogsDocument = gql`
@@ -146,3 +153,41 @@ export function useGetDogByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetDogByNameQueryHookResult = ReturnType<typeof useGetDogByNameQuery>;
 export type GetDogByNameLazyQueryHookResult = ReturnType<typeof useGetDogByNameLazyQuery>;
 export type GetDogByNameQueryResult = Apollo.QueryResult<GetDogByNameQuery, GetDogByNameQueryVariables>;
+export const GetDogByBreedDocument = gql`
+    query getDogByBreed($breed: String!) {
+  dogsByBreed(breed: $breed) {
+    name
+    sex
+    breed
+    weight
+  }
+}
+    `;
+
+/**
+ * __useGetDogByBreedQuery__
+ *
+ * To run a query within a React component, call `useGetDogByBreedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDogByBreedQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDogByBreedQuery({
+ *   variables: {
+ *      breed: // value for 'breed'
+ *   },
+ * });
+ */
+export function useGetDogByBreedQuery(baseOptions: Apollo.QueryHookOptions<GetDogByBreedQuery, GetDogByBreedQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDogByBreedQuery, GetDogByBreedQueryVariables>(GetDogByBreedDocument, options);
+      }
+export function useGetDogByBreedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDogByBreedQuery, GetDogByBreedQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDogByBreedQuery, GetDogByBreedQueryVariables>(GetDogByBreedDocument, options);
+        }
+export type GetDogByBreedQueryHookResult = ReturnType<typeof useGetDogByBreedQuery>;
+export type GetDogByBreedLazyQueryHookResult = ReturnType<typeof useGetDogByBreedLazyQuery>;
+export type GetDogByBreedQueryResult = Apollo.QueryResult<GetDogByBreedQuery, GetDogByBreedQueryVariables>;
