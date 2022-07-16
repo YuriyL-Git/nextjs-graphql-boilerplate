@@ -4,7 +4,27 @@
 4. create test project
 5. install redis with refresh token
 6. install docker
+7. connect resolvers automatically to apollo server
 
 
 //create google auth
 //https://console.cloud.google.com/apis/dashboard?project=vivid-anthem-346718
+
+Data flow->
+1.create prisma shema
+2. run yarn dev
+3. create additional resolvers and connect to apollo server
+
+
+
+/* Deploy postgres to Heroku */
+1. Change your prisma .env file to local db
+2. Delete prisma/migrations folder
+Run: yarn migrate-preview
+    to start a new migration
+
+3. Change your prisma .env file back to development db
+4. Update migration name in "apply-migration" script in package json
+5. Run: yarn apply-migration
+6. Run: yarn prisma-reset
+7. Run: yarn prisma push

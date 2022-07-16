@@ -1433,6 +1433,14 @@ export type StringNullableFilter = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
+export type StringNullableListFilter = {
+  equals?: InputMaybe<Array<Scalars['String']>>;
+  has?: InputMaybe<Scalars['String']>;
+  hasEvery?: InputMaybe<Array<Scalars['String']>>;
+  hasSome?: InputMaybe<Array<Scalars['String']>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type StringNullableWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntNullableFilter>;
   _max?: InputMaybe<NestedStringNullableFilter>;
@@ -1478,6 +1486,7 @@ export type User = {
   id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  roles: Array<Scalars['String']>;
   sessions: Array<Session>;
 };
 
@@ -1515,6 +1524,7 @@ export type UserCountAggregate = {
   id: Scalars['Int'];
   image: Scalars['Int'];
   name: Scalars['Int'];
+  roles: Scalars['Int'];
 };
 
 export type UserCountOrderByAggregateInput = {
@@ -1523,6 +1533,7 @@ export type UserCountOrderByAggregateInput = {
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
+  roles?: InputMaybe<SortOrder>;
 };
 
 export type UserCreateInput = {
@@ -1532,6 +1543,7 @@ export type UserCreateInput = {
   id?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  roles?: InputMaybe<UserCreaterolesInput>;
   sessions?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
 };
 
@@ -1541,6 +1553,7 @@ export type UserCreateManyInput = {
   id?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  roles?: InputMaybe<UserCreaterolesInput>;
 };
 
 export type UserCreateNestedOneWithoutAccountsInput = {
@@ -1571,6 +1584,7 @@ export type UserCreateWithoutAccountsInput = {
   id?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  roles?: InputMaybe<UserCreaterolesInput>;
   sessions?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
 };
 
@@ -1581,6 +1595,11 @@ export type UserCreateWithoutSessionsInput = {
   id?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  roles?: InputMaybe<UserCreaterolesInput>;
+};
+
+export type UserCreaterolesInput = {
+  set: Array<Scalars['String']>;
 };
 
 export type UserGroupBy = {
@@ -1593,6 +1612,7 @@ export type UserGroupBy = {
   id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  roles?: Maybe<Array<Scalars['String']>>;
 };
 
 export type UserMaxAggregate = {
@@ -1638,6 +1658,7 @@ export type UserOrderByWithAggregationInput = {
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
+  roles?: InputMaybe<SortOrder>;
 };
 
 export type UserOrderByWithRelationInput = {
@@ -1647,6 +1668,7 @@ export type UserOrderByWithRelationInput = {
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
+  roles?: InputMaybe<SortOrder>;
   sessions?: InputMaybe<SessionOrderByRelationAggregateInput>;
 };
 
@@ -1660,7 +1682,8 @@ export enum UserScalarFieldEnum {
   EmailVerified = 'emailVerified',
   Id = 'id',
   Image = 'image',
-  Name = 'name'
+  Name = 'name',
+  Roles = 'roles'
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -1672,6 +1695,7 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: InputMaybe<StringWithAggregatesFilter>;
   image?: InputMaybe<StringNullableWithAggregatesFilter>;
   name?: InputMaybe<StringNullableWithAggregatesFilter>;
+  roles?: InputMaybe<StringNullableListFilter>;
 };
 
 export type UserUpdateInput = {
@@ -1681,6 +1705,7 @@ export type UserUpdateInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<UserUpdaterolesInput>;
   sessions?: InputMaybe<SessionUpdateManyWithoutUserNestedInput>;
 };
 
@@ -1690,6 +1715,7 @@ export type UserUpdateManyMutationInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<UserUpdaterolesInput>;
 };
 
 export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
@@ -1714,6 +1740,7 @@ export type UserUpdateWithoutAccountsInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<UserUpdaterolesInput>;
   sessions?: InputMaybe<SessionUpdateManyWithoutUserNestedInput>;
 };
 
@@ -1724,6 +1751,12 @@ export type UserUpdateWithoutSessionsInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<UserUpdaterolesInput>;
+};
+
+export type UserUpdaterolesInput = {
+  push?: InputMaybe<Array<Scalars['String']>>;
+  set?: InputMaybe<Array<Scalars['String']>>;
 };
 
 export type UserUpsertWithoutAccountsInput = {
@@ -1746,6 +1779,7 @@ export type UserWhereInput = {
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringNullableFilter>;
   name?: InputMaybe<StringNullableFilter>;
+  roles?: InputMaybe<StringNullableListFilter>;
   sessions?: InputMaybe<SessionListRelationFilter>;
 };
 

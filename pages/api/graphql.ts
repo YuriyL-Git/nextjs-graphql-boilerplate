@@ -10,7 +10,10 @@ import Cors from "cors";
 import { HOST_NAME } from "@/src/config/config";
 import { runMiddleware } from "@/src/utils/run-middleware";
 import { prisma } from "@/src/prisma/prisma";
+
+//don't change full paths here!
 import { resolvers } from "./../../src/prisma/node_modules/@generated/type-graphql/";
+import { authChecker, createContext } from "./auth/auth-checker";
 
 const SCHEMA_PATH = "./../../../../src/graphql/generated/schema.graphql";
 
@@ -27,13 +30,12 @@ const schema = await buildSchema({
     commentDescriptions: false,
     sortedSchema: false,
   },
+  authChecker,
 });
 
 const server = new ApolloServer({
   schema,
-  context: () => {
-    return { prisma };
-  },
+  context: createContext,
 });
 const startServer = server.start();
 

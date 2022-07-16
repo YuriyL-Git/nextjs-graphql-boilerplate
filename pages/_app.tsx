@@ -3,16 +3,19 @@ import { queryClient } from "@/src/graphql/clients/request-clients";
 import { Hydrate, QueryClientProvider } from "react-query";
 import apolloClient from "@/src/graphql/clients/apollo-client";
 import { ApolloProvider } from "@apollo/client";
+import { SessionProvider } from "next-auth/react";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <ApolloProvider client={apolloClient}>
-          <Component {...pageProps} />
-        </ApolloProvider>
-      </Hydrate>
-    </QueryClientProvider>
+    <SessionProvider session={session}>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
 

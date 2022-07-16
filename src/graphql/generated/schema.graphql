@@ -24,10 +24,10 @@ type Query {
   verificationTokens(where: VerificationTokenWhereInput, orderBy: [VerificationTokenOrderByWithRelationInput!], cursor: VerificationTokenWhereUniqueInput, take: Int, skip: Int, distinct: [VerificationTokenScalarFieldEnum!]): [VerificationToken!]!
   verificationToken(where: VerificationTokenWhereUniqueInput!): VerificationToken
   groupByVerificationToken(where: VerificationTokenWhereInput, orderBy: [VerificationTokenOrderByWithAggregationInput!], by: [VerificationTokenScalarFieldEnum!]!, having: VerificationTokenScalarWhereWithAggregatesInput, take: Int, skip: Int): [VerificationTokenGroupBy!]!
-  userByEmail: User
   dog(name: String!): Dog
   dogsByBreed(breed: String!): [Dog!]!
   dogs: [Dog!]!
+  userByEmail: User
 }
 
 type AggregateAccount {
@@ -210,6 +210,7 @@ input UserWhereInput {
   email: StringNullableFilter
   emailVerified: DateTimeNullableFilter
   image: StringNullableFilter
+  roles: StringNullableListFilter
   accounts: AccountListRelationFilter
   sessions: SessionListRelationFilter
 }
@@ -239,6 +240,14 @@ input NestedDateTimeNullableFilter {
   gt: DateTime
   gte: DateTime
   not: NestedDateTimeNullableFilter
+}
+
+input StringNullableListFilter {
+  equals: [String!]
+  has: String
+  hasEvery: [String!]
+  hasSome: [String!]
+  isEmpty: Boolean
 }
 
 input AccountListRelationFilter {
@@ -313,6 +322,7 @@ input UserOrderByWithRelationInput {
   email: SortOrder
   emailVerified: SortOrder
   image: SortOrder
+  roles: SortOrder
   accounts: AccountOrderByRelationAggregateInput
   sessions: SessionOrderByRelationAggregateInput
 }
@@ -357,6 +367,7 @@ type User {
   email: String
   emailVerified: DateTime
   image: String
+  roles: [String!]!
   _count: UserCount
   accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Int, skip: Int, distinct: [AccountScalarFieldEnum!]): [Account!]!
   sessions(where: SessionWhereInput, orderBy: [SessionOrderByWithRelationInput!], cursor: SessionWhereUniqueInput, take: Int, skip: Int, distinct: [SessionScalarFieldEnum!]): [Session!]!
@@ -764,6 +775,7 @@ type UserCountAggregate {
   email: Int!
   emailVerified: Int!
   image: Int!
+  roles: Int!
   _all: Int!
 }
 
@@ -794,6 +806,7 @@ enum UserScalarFieldEnum {
   email
   emailVerified
   image
+  roles
 }
 
 type UserGroupBy {
@@ -802,6 +815,7 @@ type UserGroupBy {
   email: String
   emailVerified: DateTime
   image: String
+  roles: [String!]
   _count: UserCountAggregate
   _min: UserMinAggregate
   _max: UserMaxAggregate
@@ -813,6 +827,7 @@ input UserOrderByWithAggregationInput {
   email: SortOrder
   emailVerified: SortOrder
   image: SortOrder
+  roles: SortOrder
   _count: UserCountOrderByAggregateInput
   _max: UserMaxOrderByAggregateInput
   _min: UserMinOrderByAggregateInput
@@ -824,6 +839,7 @@ input UserCountOrderByAggregateInput {
   email: SortOrder
   emailVerified: SortOrder
   image: SortOrder
+  roles: SortOrder
 }
 
 input UserMaxOrderByAggregateInput {
@@ -851,6 +867,7 @@ input UserScalarWhereWithAggregatesInput {
   email: StringNullableWithAggregatesFilter
   emailVerified: DateTimeNullableWithAggregatesFilter
   image: StringNullableWithAggregatesFilter
+  roles: StringNullableListFilter
 }
 
 input DateTimeNullableWithAggregatesFilter {
@@ -1084,7 +1101,12 @@ input UserCreateWithoutAccountsInput {
   email: String
   emailVerified: DateTime
   image: String
+  roles: UserCreaterolesInput
   sessions: SessionCreateNestedManyWithoutUserInput
+}
+
+input UserCreaterolesInput {
+  set: [String!]!
 }
 
 input SessionCreateNestedManyWithoutUserInput {
@@ -1185,11 +1207,17 @@ input UserUpdateWithoutAccountsInput {
   email: NullableStringFieldUpdateOperationsInput
   emailVerified: NullableDateTimeFieldUpdateOperationsInput
   image: NullableStringFieldUpdateOperationsInput
+  roles: UserUpdaterolesInput
   sessions: SessionUpdateManyWithoutUserNestedInput
 }
 
 input NullableDateTimeFieldUpdateOperationsInput {
   set: DateTime
+}
+
+input UserUpdaterolesInput {
+  set: [String!]
+  push: [String!]
 }
 
 input SessionUpdateManyWithoutUserNestedInput {
@@ -1274,6 +1302,7 @@ input UserCreateWithoutSessionsInput {
   email: String
   emailVerified: DateTime
   image: String
+  roles: UserCreaterolesInput
   accounts: AccountCreateNestedManyWithoutUserInput
 }
 
@@ -1353,6 +1382,7 @@ input UserUpdateWithoutSessionsInput {
   email: NullableStringFieldUpdateOperationsInput
   emailVerified: NullableDateTimeFieldUpdateOperationsInput
   image: NullableStringFieldUpdateOperationsInput
+  roles: UserUpdaterolesInput
   accounts: AccountUpdateManyWithoutUserNestedInput
 }
 
@@ -1424,6 +1454,7 @@ input UserCreateManyInput {
   email: String
   emailVerified: DateTime
   image: String
+  roles: UserCreaterolesInput
 }
 
 input UserCreateInput {
@@ -1432,6 +1463,7 @@ input UserCreateInput {
   email: String
   emailVerified: DateTime
   image: String
+  roles: UserCreaterolesInput
   accounts: AccountCreateNestedManyWithoutUserInput
   sessions: SessionCreateNestedManyWithoutUserInput
 }
@@ -1442,6 +1474,7 @@ input UserUpdateManyMutationInput {
   email: NullableStringFieldUpdateOperationsInput
   emailVerified: NullableDateTimeFieldUpdateOperationsInput
   image: NullableStringFieldUpdateOperationsInput
+  roles: UserUpdaterolesInput
 }
 
 input UserUpdateInput {
@@ -1450,6 +1483,7 @@ input UserUpdateInput {
   email: NullableStringFieldUpdateOperationsInput
   emailVerified: NullableDateTimeFieldUpdateOperationsInput
   image: NullableStringFieldUpdateOperationsInput
+  roles: UserUpdaterolesInput
   accounts: AccountUpdateManyWithoutUserNestedInput
   sessions: SessionUpdateManyWithoutUserNestedInput
 }
