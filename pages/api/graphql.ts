@@ -4,16 +4,17 @@ import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { DogsResolver } from "@/src/graphql/schema/dogs.resolver";
 import { UserResolver } from "@/src/graphql/schema/user.resolver";
-
-import path from "path";
-import Cors from "cors";
 import { HOST_NAME } from "@/src/config/config";
 import { runMiddleware } from "@/src/utils/run-middleware";
-import { prisma } from "@/src/prisma/prisma";
+import { authChecker, createContext } from "./auth/auth-checker";
+import path from "path";
+import Cors from "cors";
 
 //don't change full paths here!
-import { resolvers } from "./../../src/prisma/node_modules/@generated/type-graphql/";
-import { authChecker, createContext } from "./auth/auth-checker";
+import {
+  crudResolvers,
+  relationResolvers,
+} from "./../../src/graphql/generated/type-graphql/index";
 
 const SCHEMA_PATH = "./../../../../src/graphql/generated/schema.graphql";
 
@@ -24,7 +25,12 @@ const cors = Cors({
 });
 
 const schema = await buildSchema({
-  resolvers: [DogsResolver, UserResolver, ...resolvers],
+  resolvers: [
+    DogsResolver,
+    UserResolver,
+    ...crudResolvers,
+    ...relationResolvers,
+  ],
   emitSchemaFile: {
     path: path.join(__dirname, SCHEMA_PATH),
     commentDescriptions: false,

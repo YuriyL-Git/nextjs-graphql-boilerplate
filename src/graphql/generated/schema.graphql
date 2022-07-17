@@ -4,6 +4,9 @@
 # -----------------------------------------------
 
 type Query {
+  dog(name: String!): Dog
+  dogsByBreed(breed: String!): [Dog!]!
+  dogs: [Dog!]!
   aggregateAccount(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Int, skip: Int): AggregateAccount!
   findFirstAccount(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Int, skip: Int, distinct: [AccountScalarFieldEnum!]): Account
   accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Int, skip: Int, distinct: [AccountScalarFieldEnum!]): [Account!]!
@@ -24,10 +27,26 @@ type Query {
   verificationTokens(where: VerificationTokenWhereInput, orderBy: [VerificationTokenOrderByWithRelationInput!], cursor: VerificationTokenWhereUniqueInput, take: Int, skip: Int, distinct: [VerificationTokenScalarFieldEnum!]): [VerificationToken!]!
   verificationToken(where: VerificationTokenWhereUniqueInput!): VerificationToken
   groupByVerificationToken(where: VerificationTokenWhereInput, orderBy: [VerificationTokenOrderByWithAggregationInput!], by: [VerificationTokenScalarFieldEnum!]!, having: VerificationTokenScalarWhereWithAggregatesInput, take: Int, skip: Int): [VerificationTokenGroupBy!]!
-  dog(name: String!): Dog
-  dogsByBreed(breed: String!): [Dog!]!
-  dogs: [Dog!]!
   userByEmail: User
+}
+
+type Dog {
+  name: ID!
+  attributes: [DogAttribute!]!
+  description: [String!]!
+  image: String!
+  ageInWeeks: Int!
+  sex: String!
+  breed: String!
+  color: String!
+  fee: Float!
+  weight: Float!
+  availableDate: String!
+}
+
+type DogAttribute {
+  key: ID!
+  value: String!
 }
 
 type AggregateAccount {
@@ -210,7 +229,7 @@ input UserWhereInput {
   email: StringNullableFilter
   emailVerified: DateTimeNullableFilter
   image: StringNullableFilter
-  roles: StringNullableListFilter
+  roles: EnumRolesNullableListFilter
   accounts: AccountListRelationFilter
   sessions: SessionListRelationFilter
 }
@@ -242,12 +261,17 @@ input NestedDateTimeNullableFilter {
   not: NestedDateTimeNullableFilter
 }
 
-input StringNullableListFilter {
-  equals: [String!]
-  has: String
-  hasEvery: [String!]
-  hasSome: [String!]
+input EnumRolesNullableListFilter {
+  equals: [Roles!]
+  has: Roles
+  hasEvery: [Roles!]
+  hasSome: [Roles!]
   isEmpty: Boolean
+}
+
+enum Roles {
+  USER
+  ADMIN
 }
 
 input AccountListRelationFilter {
@@ -367,7 +391,7 @@ type User {
   email: String
   emailVerified: DateTime
   image: String
-  roles: [String!]!
+  roles: [Roles!]!
   _count: UserCount
   accounts(where: AccountWhereInput, orderBy: [AccountOrderByWithRelationInput!], cursor: AccountWhereUniqueInput, take: Int, skip: Int, distinct: [AccountScalarFieldEnum!]): [Account!]!
   sessions(where: SessionWhereInput, orderBy: [SessionOrderByWithRelationInput!], cursor: SessionWhereUniqueInput, take: Int, skip: Int, distinct: [SessionScalarFieldEnum!]): [Session!]!
@@ -395,7 +419,6 @@ enum AccountScalarFieldEnum {
 
 type Session {
   id: String!
-  sessionToken: String!
   userId: String!
   expires: DateTime!
   user: User!
@@ -815,7 +838,7 @@ type UserGroupBy {
   email: String
   emailVerified: DateTime
   image: String
-  roles: [String!]
+  roles: [Roles!]
   _count: UserCountAggregate
   _min: UserMinAggregate
   _max: UserMaxAggregate
@@ -867,7 +890,7 @@ input UserScalarWhereWithAggregatesInput {
   email: StringNullableWithAggregatesFilter
   emailVerified: DateTimeNullableWithAggregatesFilter
   image: StringNullableWithAggregatesFilter
-  roles: StringNullableListFilter
+  roles: EnumRolesNullableListFilter
 }
 
 input DateTimeNullableWithAggregatesFilter {
@@ -1005,25 +1028,6 @@ input VerificationTokenScalarWhereWithAggregatesInput {
   expires: DateTimeWithAggregatesFilter
 }
 
-type Dog {
-  name: ID!
-  attributes: [DogAttribute!]!
-  description: [String!]!
-  image: String!
-  ageInWeeks: Int!
-  sex: String!
-  breed: String!
-  color: String!
-  fee: Float!
-  weight: Float!
-  availableDate: String!
-}
-
-type DogAttribute {
-  key: ID!
-  value: String!
-}
-
 type Mutation {
   createManyAccount(data: [AccountCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createOneAccount(data: AccountCreateInput!): Account!
@@ -1106,7 +1110,7 @@ input UserCreateWithoutAccountsInput {
 }
 
 input UserCreaterolesInput {
-  set: [String!]!
+  set: [Roles!]!
 }
 
 input SessionCreateNestedManyWithoutUserInput {
@@ -1216,8 +1220,8 @@ input NullableDateTimeFieldUpdateOperationsInput {
 }
 
 input UserUpdaterolesInput {
-  set: [String!]
-  push: [String!]
+  set: [Roles!]
+  push: [Roles!]
 }
 
 input SessionUpdateManyWithoutUserNestedInput {

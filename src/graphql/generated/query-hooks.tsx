@@ -550,6 +550,14 @@ export type DogAttribute = {
   value: Scalars['String'];
 };
 
+export type EnumRolesNullableListFilter = {
+  equals?: InputMaybe<Array<Roles>>;
+  has?: InputMaybe<Roles>;
+  hasEvery?: InputMaybe<Array<Roles>>;
+  hasSome?: InputMaybe<Array<Roles>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type IntNullableFilter = {
   equals?: InputMaybe<Scalars['Int']>;
   gt?: InputMaybe<Scalars['Int']>;
@@ -1165,11 +1173,15 @@ export enum QueryMode {
   Insensitive = 'insensitive'
 }
 
+export enum Roles {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
+
 export type Session = {
   __typename?: 'Session';
   expires: Scalars['DateTime'];
   id: Scalars['String'];
-  sessionToken: Scalars['String'];
   user: User;
   userId: Scalars['String'];
 };
@@ -1433,14 +1445,6 @@ export type StringNullableFilter = {
   startsWith?: InputMaybe<Scalars['String']>;
 };
 
-export type StringNullableListFilter = {
-  equals?: InputMaybe<Array<Scalars['String']>>;
-  has?: InputMaybe<Scalars['String']>;
-  hasEvery?: InputMaybe<Array<Scalars['String']>>;
-  hasSome?: InputMaybe<Array<Scalars['String']>>;
-  isEmpty?: InputMaybe<Scalars['Boolean']>;
-};
-
 export type StringNullableWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntNullableFilter>;
   _max?: InputMaybe<NestedStringNullableFilter>;
@@ -1486,7 +1490,7 @@ export type User = {
   id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  roles: Array<Scalars['String']>;
+  roles: Array<Roles>;
   sessions: Array<Session>;
 };
 
@@ -1599,7 +1603,7 @@ export type UserCreateWithoutSessionsInput = {
 };
 
 export type UserCreaterolesInput = {
-  set: Array<Scalars['String']>;
+  set: Array<Roles>;
 };
 
 export type UserGroupBy = {
@@ -1612,7 +1616,7 @@ export type UserGroupBy = {
   id: Scalars['String'];
   image?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
-  roles?: Maybe<Array<Scalars['String']>>;
+  roles?: Maybe<Array<Roles>>;
 };
 
 export type UserMaxAggregate = {
@@ -1695,7 +1699,7 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: InputMaybe<StringWithAggregatesFilter>;
   image?: InputMaybe<StringNullableWithAggregatesFilter>;
   name?: InputMaybe<StringNullableWithAggregatesFilter>;
-  roles?: InputMaybe<StringNullableListFilter>;
+  roles?: InputMaybe<EnumRolesNullableListFilter>;
 };
 
 export type UserUpdateInput = {
@@ -1755,8 +1759,8 @@ export type UserUpdateWithoutSessionsInput = {
 };
 
 export type UserUpdaterolesInput = {
-  push?: InputMaybe<Array<Scalars['String']>>;
-  set?: InputMaybe<Array<Scalars['String']>>;
+  push?: InputMaybe<Array<Roles>>;
+  set?: InputMaybe<Array<Roles>>;
 };
 
 export type UserUpsertWithoutAccountsInput = {
@@ -1779,7 +1783,7 @@ export type UserWhereInput = {
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringNullableFilter>;
   name?: InputMaybe<StringNullableFilter>;
-  roles?: InputMaybe<StringNullableListFilter>;
+  roles?: InputMaybe<EnumRolesNullableListFilter>;
   sessions?: InputMaybe<SessionListRelationFilter>;
 };
 
@@ -1942,6 +1946,11 @@ export type GetUserByEmailQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserByEmailQuery = { __typename?: 'Query', userByEmail?: { __typename?: 'User', name?: string | null } | null };
 
+export type GetTestQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTestQuery = { __typename?: 'Query', findFirstUser?: { __typename?: 'User', name?: string | null, sessions: Array<{ __typename?: 'Session', id: string }> } | null };
+
 
 export const GetDogsDocument = gql`
     query getDogs {
@@ -2095,3 +2104,40 @@ export function useGetUserByEmailLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetUserByEmailQueryHookResult = ReturnType<typeof useGetUserByEmailQuery>;
 export type GetUserByEmailLazyQueryHookResult = ReturnType<typeof useGetUserByEmailLazyQuery>;
 export type GetUserByEmailQueryResult = Apollo.QueryResult<GetUserByEmailQuery, GetUserByEmailQueryVariables>;
+export const GetTestDocument = gql`
+    query getTest {
+  findFirstUser {
+    name
+    sessions {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTestQuery__
+ *
+ * To run a query within a React component, call `useGetTestQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTestQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTestQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTestQuery(baseOptions?: Apollo.QueryHookOptions<GetTestQuery, GetTestQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTestQuery, GetTestQueryVariables>(GetTestDocument, options);
+      }
+export function useGetTestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTestQuery, GetTestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTestQuery, GetTestQueryVariables>(GetTestDocument, options);
+        }
+export type GetTestQueryHookResult = ReturnType<typeof useGetTestQuery>;
+export type GetTestLazyQueryHookResult = ReturnType<typeof useGetTestLazyQuery>;
+export type GetTestQueryResult = Apollo.QueryResult<GetTestQuery, GetTestQueryVariables>;

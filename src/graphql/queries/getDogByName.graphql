@@ -27,5 +27,13 @@ query getUserByEmail {
  }
 }
 
+query getTest {
+    findFirstUser{
+        name
+        sessions {
+            id
+        }
+    }
+}
 
 

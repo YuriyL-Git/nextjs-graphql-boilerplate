@@ -20,9 +20,9 @@
     "baseUrl": ".",
     "paths": {
       "@/src/*": ["src/*"],
-      "@generated/*": ["src/prisma/node_modules/@generated/*"]
+      "@generated/*": ["src/graphql/generated/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/graphql/generated/**/*.ts"]
 }

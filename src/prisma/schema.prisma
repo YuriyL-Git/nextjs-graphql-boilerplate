@@ -1,15 +1,20 @@
 generator typegraphql {
   provider = "typegraphql-prisma"
+  output   = "../graphql/generated/type-graphql"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  //shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Only needed when using a cloud provider that doesn't support the creation of new databases, like Heroku. Learn more: https://pris.ly/migrate-shadow
 }
 
 generator client {
   provider        = "prisma-client-js"
+}
+
+enum Roles {
+  USER
+  ADMIN
 }
 
 model Account {
@@ -33,6 +38,7 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
+  /// @TypeGraphQL.omit(output: true)
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -45,7 +51,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  roles         String[]
+  roles         Roles[]
   accounts      Account[]
   sessions      Session[]
 }
